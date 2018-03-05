@@ -39,7 +39,7 @@
             this.HighestButton = new System.Windows.Forms.Button();
             this.NumToReturnTextBox = new System.Windows.Forms.TextBox();
             this.LowestButton = new System.Windows.Forms.Button();
-            this.FIndTopNButton = new System.Windows.Forms.Button();
+            this.FindTopNButton = new System.Windows.Forms.Button();
             this.ClearSalesDataButton = new System.Windows.Forms.Button();
             this.ResetButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
@@ -131,6 +131,7 @@
             this.HighestButton.TabIndex = 1;
             this.HighestButton.Text = "Highest";
             this.HighestButton.UseVisualStyleBackColor = true;
+            this.HighestButton.Click += new System.EventHandler(this.HighestButton_Click);
             // 
             // NumToReturnTextBox
             // 
@@ -147,15 +148,17 @@
             this.LowestButton.TabIndex = 3;
             this.LowestButton.Text = "Lowest";
             this.LowestButton.UseVisualStyleBackColor = true;
+            this.LowestButton.Click += new System.EventHandler(this.LowestButton_Click);
             // 
-            // FIndTopNButton
+            // FindTopNButton
             // 
-            this.FIndTopNButton.Location = new System.Drawing.Point(128, 194);
-            this.FIndTopNButton.Name = "FIndTopNButton";
-            this.FIndTopNButton.Size = new System.Drawing.Size(75, 23);
-            this.FIndTopNButton.TabIndex = 4;
-            this.FIndTopNButton.Text = "Find Top N";
-            this.FIndTopNButton.UseVisualStyleBackColor = true;
+            this.FindTopNButton.Location = new System.Drawing.Point(128, 194);
+            this.FindTopNButton.Name = "FindTopNButton";
+            this.FindTopNButton.Size = new System.Drawing.Size(75, 23);
+            this.FindTopNButton.TabIndex = 4;
+            this.FindTopNButton.Text = "Find Top N";
+            this.FindTopNButton.UseVisualStyleBackColor = true;
+            this.FindTopNButton.Click += new System.EventHandler(this.FindTopNButton_Click);
             // 
             // ClearSalesDataButton
             // 
@@ -202,13 +205,14 @@
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.ResetButton);
             this.Controls.Add(this.ClearSalesDataButton);
-            this.Controls.Add(this.FIndTopNButton);
+            this.Controls.Add(this.FindTopNButton);
             this.Controls.Add(this.LowestButton);
             this.Controls.Add(this.NumToReturnTextBox);
             this.Controls.Add(this.HighestButton);
             this.Controls.Add(this.SalesDataGroupBox);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.SalesDataGroupBox.ResumeLayout(false);
             this.SalesDataGroupBox.PerformLayout();
             this.ResumeLayout(false);
@@ -229,7 +233,7 @@
         private System.Windows.Forms.Button HighestButton;
         private System.Windows.Forms.TextBox NumToReturnTextBox;
         private System.Windows.Forms.Button LowestButton;
-        private System.Windows.Forms.Button FIndTopNButton;
+        private System.Windows.Forms.Button FindTopNButton;
         private System.Windows.Forms.Button ClearSalesDataButton;
         private System.Windows.Forms.Button ResetButton;
         private System.Windows.Forms.Button ExitButton;
