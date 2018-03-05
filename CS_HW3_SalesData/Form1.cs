@@ -18,7 +18,7 @@ namespace CS_HW3_SalesData
         }
 
 
-        //Write some code here
+        //Write some code
 
     }
 }
