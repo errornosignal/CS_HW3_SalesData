@@ -1,13 +1,6 @@
 ﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CS_HW3_SalesData
@@ -19,73 +12,65 @@ namespace CS_HW3_SalesData
             InitializeComponent();
         }
 
-        private Form2 SecondForm = new Form2();
+        public Form2 SecondForm = new Form2();
 
-        List<Sale> SalesList = new List<Sale>();
-        int SaleNumber = 0;
+        private List<Sale> SalesList = new List<Sale>();
+        private int SaleNumber = 0;
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            SaleCountOutputTextBox.TextAlign = HorizontalAlignment.Right;
+            NumToReturnTextBox.TextAlign = HorizontalAlignment.Right;
             AddSales();
         }
 
         private void AddSaleButton_Click(object sender, EventArgs e)
         {
             var RepName = SplitString(RepNameTextBox.Text);
-            string FormattedRepName = FormatName(RepName);
-            var AmtIsValid = decimal.TryParse(SaleAmtTextBox.Text, out decimal NewDecimal);
+            var FormattedRepName = FormatName(RepName);
+            var AmtIsValid = decimal.TryParse(SaleAmtTextBox.Text, out var NewDecimal);
 
             if (FormattedRepName == "")
             {
-                //display error on invalid name entered
                 DisplayNameInputError();
                 RepNameTextBox.Focus();
             }
             else if (!AmtIsValid)
             {
-                //display error on invalid amount entered
                 DisplayAmountInputError();
                 SaleAmtTextBox.Clear();
                 SaleAmtTextBox.Focus();
             }
-            else if ((FormattedRepName.Length > 0) && AmtIsValid)
+            else if (FormattedRepName.Length > 0)
             {
-                //add new Sale object
-                SalesList.Add(new Sale(SaleNumber, FormattedRepName, NewDecimal));
-
-                //clear and focus
+                SalesList.Add(new Sale(FormattedRepName, NewDecimal));
+                
                 RepNameTextBox.Clear();
                 SaleAmtTextBox.Clear();
                 RepNameTextBox.Focus();
 
-                //increment sale counter
                 SaleNumber++;
-
-                //update sale count label
-                SaleCountOutputLabel.Text = SaleNumber.ToString();
-
-                //reset datasource
+                SaleCountOutputTextBox.Text = SaleNumber.ToString();
                 ResetDatasource();
             }
         }
 
+        /// <summary>
+        /// Pre-fills sales data for ease of testing
+        /// </summary>
         private void AddSales()
         {
-            SalesList.Add(new Sale(SaleNumber, FixName("Alan A."), 50000.00m));
-            SaleNumber++;
-            SalesList.Add(new Sale(SaleNumber, FixName("Bob B."), 152000.99m));
-            SaleNumber++;
-            SalesList.Add(new Sale(SaleNumber, FixName("Chris C."), 35000.12m));
-            SaleNumber++;
-            SalesList.Add(new Sale(SaleNumber, FixName("Dale D."), 76000.10m));
-            SaleNumber++;
-            SalesList.Add(new Sale(SaleNumber, FixName("Eric. E"), 133000.00m));
-            SaleNumber++;
+            SalesList.Add(new Sale(FixName("Alan A."), 50001.00m));
+            SalesList.Add(new Sale(FixName("Bob B."), 152000.99m));
+            SalesList.Add(new Sale(FixName("Chris C."), 35000.12m));
+            SalesList.Add(new Sale(FixName("Dale D."), 76000m));
+            SalesList.Add(new Sale(FixName("Eric. E"), 133000.00m));
+            SaleNumber += 5;
             ResetDatasource();
-            SaleCountOutputLabel.Text = SaleNumber.ToString();
+            SaleCountOutputTextBox.Text = SaleNumber.ToString();
         }
 
-        public string FixName(string String)
+        private static string FixName(string String)
         {
             var NewString = SplitString(String);
             return FormatName(NewString);
@@ -93,24 +78,49 @@ namespace CS_HW3_SalesData
 
         private void HighestButton_Click(object sender, EventArgs e)
         {
-            var SortedSalesList = SalesList.OrderBy(x => x.SaleAmt).ToList();
-            NumToReturnTextBox.Text = GetHighestRepBySales(SortedSalesList).ToString();
+            if (SalesList.Count > 0)
+            {
+                var SortedSalesList = SalesList.OrderBy(x => x.SaleAmt).ToList();
+                NumToReturnTextBox.Text = GetHighestRepBySales(SortedSalesList).ToString();
+            }
+            else
+            {
+                DisplayNoSales();
+            }
         }
 
         private void LowestButton_Click(object sender, EventArgs e)
         {
-            var SortedSalesList = SalesList.OrderBy(x => x.SaleAmt).ToList();
-            NumToReturnTextBox.Text = GetLowestRepBySales(SortedSalesList).ToString();
+            if (SalesList.Count > 0)
+            {
+                var SortedSalesList = SalesList.OrderBy(x => x.SaleAmt).ToList();
+                NumToReturnTextBox.Text = GetLowestRepBySales(SortedSalesList).ToString();
+            }
+            else
+            {
+                DisplayNoSales();
+            }
         }
 
         private void FindTopNButton_Click(object sender, EventArgs e)
         {
-            var SortedSalesList = SalesList.OrderBy(x => x.SaleAmt).ToList();
-            SecondForm.ShowDialog();
-            SecondForm.Form2TextBox.Focus();
+            SecondForm.SecondFormNumIsValid = true;
+            SecondForm.SecondFormNumToFind = 0;
 
-            var NumIsValid = int.TryParse(SecondForm.Form2TextBox.Text, out int NumToFind);
-            if (!NumIsValid)
+            DisplaySecondForm();
+
+            var SortedSalesList = SalesList.OrderBy(x => x.SaleAmt).ToList();
+            var NumToFind = SecondForm.SecondFormNumToFind;
+            var NumIsValid = SecondForm.SecondFormNumIsValid;
+
+            if (NumToFind == 0 && !NumIsValid)
+            {
+                DisplayNoInput();
+            }
+            else if (NumToFind == 0 && NumIsValid)
+            {/*doNothing()*/} //allow SecondForm to close without an issue
+
+            else if (!NumIsValid)
             {
                 DisplayNumIsInvalid01();
                 SecondForm.Form2TextBox.Clear();
@@ -125,33 +135,34 @@ namespace CS_HW3_SalesData
             else
             {
                 SecondForm.Form2TextBox.Clear();
-                SecondForm.Form2TextBox.Focus();
                 SortedSalesList.Reverse();
                 OutputListBox.DataSource = GetTopNBySales(SortedSalesList, NumToFind);
             }
         }
 
-        //private object GetTopNBySales(List<Sale> sortedSalesList, object text)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private void DisplaySecondForm()
+        {
+            SecondForm.ShowDialog();
+            SecondForm.Form2TextBox.Clear();
+            SecondForm.Form2TextBox.Focus();
+        }
 
-        private List<Sale> GetTopNBySales(List<Sale> SortedSalesList, int num)
+        private static List<Sale> GetTopNBySales(List<Sale> SortedSalesList, int num)
         {
             var FirstNItems = SortedSalesList.GetRange(0, num);
             return FirstNItems;
         }
 
-        public Sale GetHighestRepBySales(List<Sale> SalesList)
+        private static Sale GetHighestRepBySales(List<Sale> SalesList)
         {
             return SalesList[SalesList.Count - 1];
         }
 
-        public Sale GetLowestRepBySales(List<Sale> SalesList)
+        private static Sale GetLowestRepBySales(List<Sale> SalesList)
         {
+
             return SalesList[0];
         }
-
 
         private void ResetDatasource()
         {
@@ -159,37 +170,51 @@ namespace CS_HW3_SalesData
             OutputListBox.DataSource = SalesList;
         }
 
-        private void DisplayNameInputError()
+        private static void DisplayNameInputError()
         {
             MessageBox.Show("First and Last name are requred.", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void DisplayAmountInputError()
+        private static void DisplayAmountInputError()
         {
             MessageBox.Show("Sale amount was not a number.", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void DisplayNumIsInvalid01()
+        private static void DisplayNumIsInvalid01()
         {
             MessageBox.Show("Number was not an integer.", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void DisplayNumIsInvalid02()
+        private static void DisplayNumIsInvalid02()
         {
-            MessageBox.Show("Number must be >= 1 and < Sale Count.", "Error",
+            MessageBox.Show("Number must be between 1 and \n" +
+                            "the current Sale Count.", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public string[] SplitString(string String)
+        private static void DisplayNoInput()
         {
-            string[] StringArray = String.Split(' ');
+            MessageBox.Show("You didn't enter a number...", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private static void DisplayNoSales()
+        {
+            MessageBox.Show("There is no sales data.", "Information",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
+        private static string[] SplitString(string String)
+        {
+            var StringArray = String.Split(' ');
             return StringArray;
         }
 
-        public string FormatName(string[] array)
+        private static string FormatName(string[] array)
         {
             if (array.Length >= 2)
             {
@@ -201,28 +226,52 @@ namespace CS_HW3_SalesData
             }
         }
 
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            ResetDatasource();
+            RepNameTextBox.Clear();
+            SaleAmtTextBox.Clear();
+            NumToReturnTextBox.Clear();
+            RepNameTextBox.Focus();
+        }
+
+        private void ClearSalesDataButton_Click(object sender, EventArgs e)
+        {
+            SaleNumber = 0;
+            SaleCountOutputTextBox.Text = SaleNumber.ToString();
+            SalesList.Clear();
+            ResetDatasource();
+            RepNameTextBox.Clear();
+            SaleAmtTextBox.Clear();
+            NumToReturnTextBox.Clear();
+            RepNameTextBox.Focus();
+        }
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Form1 Exit Button Fired.", "Information",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //this.Close();
+        }
+
         /// <summary>
         /// Sale class
         /// </summary>
-        public class Sale
+        private class Sale
         {
-            public Sale(int saleNumber, string repName, decimal saleAmt)
+            public Sale(string repName, decimal saleAmt)
             {
-                SaleNumber = saleNumber;
                 RepName = repName;
                 SaleAmt = saleAmt;
             }
 
-            int SaleNumber { get; set; }
-            string RepName { get; set; }
-            public decimal SaleAmt { get; set; }
-   
+            private string RepName { get; }
+            public decimal SaleAmt { get; }
+
             public override string ToString()
             {
                 return RepName + " " + $"{SaleAmt:C}";
             } 
-        }
-
-       
+        } 
     }
 }

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.SalesDataGroupBox = new System.Windows.Forms.GroupBox();
-            this.SaleCountOutputLabel = new System.Windows.Forms.Label();
             this.AddSaleButton = new System.Windows.Forms.Button();
             this.SaleAmtTextBox = new System.Windows.Forms.TextBox();
             this.RepNameTextBox = new System.Windows.Forms.TextBox();
@@ -44,12 +43,13 @@
             this.ResetButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.OutputListBox = new System.Windows.Forms.ListBox();
+            this.SaleCountOutputTextBox = new System.Windows.Forms.TextBox();
             this.SalesDataGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // SalesDataGroupBox
             // 
-            this.SalesDataGroupBox.Controls.Add(this.SaleCountOutputLabel);
+            this.SalesDataGroupBox.Controls.Add(this.SaleCountOutputTextBox);
             this.SalesDataGroupBox.Controls.Add(this.AddSaleButton);
             this.SalesDataGroupBox.Controls.Add(this.SaleAmtTextBox);
             this.SalesDataGroupBox.Controls.Add(this.RepNameTextBox);
@@ -63,21 +63,12 @@
             this.SalesDataGroupBox.TabStop = false;
             this.SalesDataGroupBox.Text = "Sales Data";
             // 
-            // SaleCountOutputLabel
-            // 
-            this.SaleCountOutputLabel.AutoSize = true;
-            this.SaleCountOutputLabel.Location = new System.Drawing.Point(164, 79);
-            this.SaleCountOutputLabel.Name = "SaleCountOutputLabel";
-            this.SaleCountOutputLabel.Size = new System.Drawing.Size(16, 13);
-            this.SaleCountOutputLabel.TabIndex = 7;
-            this.SaleCountOutputLabel.Text = "---";
-            // 
             // AddSaleButton
             // 
             this.AddSaleButton.Location = new System.Drawing.Point(105, 102);
             this.AddSaleButton.Name = "AddSaleButton";
             this.AddSaleButton.Size = new System.Drawing.Size(75, 23);
-            this.AddSaleButton.TabIndex = 6;
+            this.AddSaleButton.TabIndex = 3;
             this.AddSaleButton.Text = "Add Sale";
             this.AddSaleButton.UseVisualStyleBackColor = true;
             this.AddSaleButton.Click += new System.EventHandler(this.AddSaleButton_Click);
@@ -87,14 +78,14 @@
             this.SaleAmtTextBox.Location = new System.Drawing.Point(80, 53);
             this.SaleAmtTextBox.Name = "SaleAmtTextBox";
             this.SaleAmtTextBox.Size = new System.Drawing.Size(100, 20);
-            this.SaleAmtTextBox.TabIndex = 4;
+            this.SaleAmtTextBox.TabIndex = 2;
             // 
             // RepNameTextBox
             // 
             this.RepNameTextBox.Location = new System.Drawing.Point(80, 27);
             this.RepNameTextBox.Name = "RepNameTextBox";
             this.RepNameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.RepNameTextBox.TabIndex = 3;
+            this.RepNameTextBox.TabIndex = 1;
             // 
             // SaleCountLabel
             // 
@@ -125,84 +116,104 @@
             // 
             // HighestButton
             // 
-            this.HighestButton.Location = new System.Drawing.Point(19, 168);
+            this.HighestButton.Location = new System.Drawing.Point(107, 155);
             this.HighestButton.Name = "HighestButton";
-            this.HighestButton.Size = new System.Drawing.Size(75, 23);
-            this.HighestButton.TabIndex = 1;
-            this.HighestButton.Text = "Highest";
+            this.HighestButton.Size = new System.Drawing.Size(96, 23);
+            this.HighestButton.TabIndex = 5;
+            this.HighestButton.Text = "Highest Sale";
             this.HighestButton.UseVisualStyleBackColor = true;
             this.HighestButton.Click += new System.EventHandler(this.HighestButton_Click);
             // 
             // NumToReturnTextBox
             // 
-            this.NumToReturnTextBox.Location = new System.Drawing.Point(103, 168);
+            this.NumToReturnTextBox.Enabled = false;
+            this.NumToReturnTextBox.Location = new System.Drawing.Point(12, 184);
             this.NumToReturnTextBox.Name = "NumToReturnTextBox";
-            this.NumToReturnTextBox.Size = new System.Drawing.Size(100, 20);
+            this.NumToReturnTextBox.ReadOnly = true;
+            this.NumToReturnTextBox.Size = new System.Drawing.Size(191, 20);
             this.NumToReturnTextBox.TabIndex = 2;
+            this.NumToReturnTextBox.TabStop = false;
             // 
             // LowestButton
             // 
-            this.LowestButton.Location = new System.Drawing.Point(19, 197);
+            this.LowestButton.Location = new System.Drawing.Point(12, 155);
             this.LowestButton.Name = "LowestButton";
-            this.LowestButton.Size = new System.Drawing.Size(75, 23);
-            this.LowestButton.TabIndex = 3;
-            this.LowestButton.Text = "Lowest";
+            this.LowestButton.Size = new System.Drawing.Size(89, 23);
+            this.LowestButton.TabIndex = 4;
+            this.LowestButton.Text = "Lowest Sale";
             this.LowestButton.UseVisualStyleBackColor = true;
             this.LowestButton.Click += new System.EventHandler(this.LowestButton_Click);
             // 
             // FindTopNButton
             // 
-            this.FindTopNButton.Location = new System.Drawing.Point(128, 194);
+            this.FindTopNButton.Location = new System.Drawing.Point(106, 210);
             this.FindTopNButton.Name = "FindTopNButton";
-            this.FindTopNButton.Size = new System.Drawing.Size(75, 23);
-            this.FindTopNButton.TabIndex = 4;
-            this.FindTopNButton.Text = "Find Top N";
+            this.FindTopNButton.Size = new System.Drawing.Size(97, 23);
+            this.FindTopNButton.TabIndex = 6;
+            this.FindTopNButton.Text = "Find Top N Sales";
             this.FindTopNButton.UseVisualStyleBackColor = true;
             this.FindTopNButton.Click += new System.EventHandler(this.FindTopNButton_Click);
             // 
             // ClearSalesDataButton
             // 
-            this.ClearSalesDataButton.Location = new System.Drawing.Point(12, 238);
+            this.ClearSalesDataButton.Location = new System.Drawing.Point(107, 253);
             this.ClearSalesDataButton.Name = "ClearSalesDataButton";
             this.ClearSalesDataButton.Size = new System.Drawing.Size(96, 23);
-            this.ClearSalesDataButton.TabIndex = 5;
+            this.ClearSalesDataButton.TabIndex = 8;
             this.ClearSalesDataButton.Text = "Clear Sales Data";
             this.ClearSalesDataButton.UseVisualStyleBackColor = true;
+            this.ClearSalesDataButton.Click += new System.EventHandler(this.ClearSalesDataButton_Click);
             // 
             // ResetButton
             // 
-            this.ResetButton.Location = new System.Drawing.Point(114, 238);
+            this.ResetButton.Location = new System.Drawing.Point(11, 210);
             this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(96, 23);
-            this.ResetButton.TabIndex = 6;
+            this.ResetButton.Size = new System.Drawing.Size(89, 23);
+            this.ResetButton.TabIndex = 7;
             this.ResetButton.Text = "Reset";
             this.ResetButton.UseVisualStyleBackColor = true;
+            this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
             // 
             // ExitButton
             // 
-            this.ExitButton.Location = new System.Drawing.Point(12, 267);
+            this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.ExitButton.Location = new System.Drawing.Point(12, 253);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(96, 23);
+            this.ExitButton.Size = new System.Drawing.Size(89, 23);
             this.ExitButton.TabIndex = 7;
+            this.ExitButton.TabStop = false;
             this.ExitButton.Text = "Exit";
             this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Visible = false;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // OutputListBox
             // 
             this.OutputListBox.FormattingEnabled = true;
             this.OutputListBox.Location = new System.Drawing.Point(218, 12);
             this.OutputListBox.Name = "OutputListBox";
-            this.OutputListBox.Size = new System.Drawing.Size(199, 277);
+            this.OutputListBox.Size = new System.Drawing.Size(175, 264);
             this.OutputListBox.TabIndex = 8;
+            // 
+            // SaleCountOutputTextBox
+            // 
+            this.SaleCountOutputTextBox.Enabled = false;
+            this.SaleCountOutputTextBox.Location = new System.Drawing.Point(80, 76);
+            this.SaleCountOutputTextBox.Name = "SaleCountOutputTextBox";
+            this.SaleCountOutputTextBox.ReadOnly = true;
+            this.SaleCountOutputTextBox.Size = new System.Drawing.Size(100, 20);
+            this.SaleCountOutputTextBox.TabIndex = 8;
+            this.SaleCountOutputTextBox.TabStop = false;
             // 
             // Form1
             // 
             this.AcceptButton = this.AddSaleButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 300);
-            this.Controls.Add(this.OutputListBox);
+            this.CancelButton = this.ExitButton;
+            this.ClientSize = new System.Drawing.Size(405, 286);
             this.Controls.Add(this.ExitButton);
+            this.Controls.Add(this.OutputListBox);
             this.Controls.Add(this.ResetButton);
             this.Controls.Add(this.ClearSalesDataButton);
             this.Controls.Add(this.FindTopNButton);
@@ -211,7 +222,7 @@
             this.Controls.Add(this.HighestButton);
             this.Controls.Add(this.SalesDataGroupBox);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Sales Data";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SalesDataGroupBox.ResumeLayout(false);
             this.SalesDataGroupBox.PerformLayout();
@@ -223,7 +234,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox SalesDataGroupBox;
-        private System.Windows.Forms.Label SaleCountOutputLabel;
         private System.Windows.Forms.Button AddSaleButton;
         private System.Windows.Forms.TextBox SaleAmtTextBox;
         private System.Windows.Forms.TextBox RepNameTextBox;
@@ -238,6 +248,7 @@
         private System.Windows.Forms.Button ResetButton;
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.ListBox OutputListBox;
+        private System.Windows.Forms.TextBox SaleCountOutputTextBox;
     }
 }
 

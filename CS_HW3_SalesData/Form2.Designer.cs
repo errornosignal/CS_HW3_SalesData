@@ -31,6 +31,7 @@
             this.Form2Label = new System.Windows.Forms.Label();
             this.Form2TextBox = new System.Windows.Forms.TextBox();
             this.Form2Button = new System.Windows.Forms.Button();
+            this.Form2ExitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Form2Label
@@ -51,6 +52,7 @@
             // 
             // Form2Button
             // 
+            this.Form2Button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Form2Button.Location = new System.Drawing.Point(131, 44);
             this.Form2Button.Name = "Form2Button";
             this.Form2Button.Size = new System.Drawing.Size(75, 23);
@@ -59,18 +61,31 @@
             this.Form2Button.UseVisualStyleBackColor = true;
             this.Form2Button.Click += new System.EventHandler(this.Form2Button_Click);
             // 
+            // Form2ExitButton
+            // 
+            this.Form2ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Form2ExitButton.Location = new System.Drawing.Point(175, 9);
+            this.Form2ExitButton.Name = "Form2ExitButton";
+            this.Form2ExitButton.Size = new System.Drawing.Size(41, 23);
+            this.Form2ExitButton.TabIndex = 3;
+            this.Form2ExitButton.Text = "Exit";
+            this.Form2ExitButton.UseVisualStyleBackColor = true;
+            this.Form2ExitButton.Visible = false;
+            this.Form2ExitButton.Click += new System.EventHandler(this.Form2ExitButton_Click);
+            // 
             // Form2
             // 
             this.AcceptButton = this.Form2Button;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.Form2Button;
+            this.CancelButton = this.Form2ExitButton;
             this.ClientSize = new System.Drawing.Size(218, 76);
+            this.Controls.Add(this.Form2ExitButton);
             this.Controls.Add(this.Form2Button);
             this.Controls.Add(this.Form2TextBox);
             this.Controls.Add(this.Form2Label);
             this.Name = "Form2";
-            this.Text = "Form2";
+            this.Text = "Find Top N";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -81,5 +96,6 @@
         private System.Windows.Forms.Label Form2Label;
         public System.Windows.Forms.TextBox Form2TextBox;
         private System.Windows.Forms.Button Form2Button;
+        private System.Windows.Forms.Button Form2ExitButton;
     }
 }
